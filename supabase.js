@@ -30,9 +30,21 @@ script.onload = () => {
     }
   }
 
+  async function getAllTables() {
+    const response = await fetch(`${url}/rest/v1/?apikey=${key}`);
+    const data = await response.json();
+    
+    const tableNames = Object.keys(data.definitions);
+    for (const tableName of tableNames) {
+      await getTable(tableName);
+    }
+  }
+
   window.getTables = getTables;
   window.getTable = getTable;
+  window.getAllTables = getAllTables;
 
   console.log("Run getTables() to fetch table definitions.");
+  console.log("Run getAllTables() to fetch data from all tables.");
 };
 document.head.appendChild(script);
